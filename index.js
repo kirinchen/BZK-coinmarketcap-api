@@ -162,6 +162,22 @@ class CoinMarketCap {
     })
   }
 
+  getQuotesHistorical (args = {}) {
+    let convert = args.convert
+    const { id, symbol } = sanitizeIdAndSymbol(args.id, args.symbol)
+
+    if (convert instanceof Array) {
+      convert = convert.join(',')
+    }
+
+    return createRequest({
+      fetcher: this.fetcher,
+      url: `${this.url}/cryptocurrency/quotes/historical`,
+      config: this.config,
+      query: { id, symbol, convert }
+    })
+  }
+
   /**
    * Get global information
    *

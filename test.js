@@ -6,6 +6,8 @@ require('dotenv').config()
 
 const API_KEY = process.env.COINMARKETCAP_API_KEY
 
+console.log('API_KEY:' + API_KEY)
+
 test('should be defined', () => {
   expect(CoinMarketCap).toBeDefined()
 })
@@ -100,6 +102,13 @@ test('should get quotes', async () => {
     expect(info.quote.USD).toHaveProperty('market_cap')
     expect(info.quote.USD).toHaveProperty('last_updated')
   }
+})
+
+test('should get quotes Historical', async () => {
+  const client = new CoinMarketCap(API_KEY)
+  const quotes = await client.getQuotesHistorical({ symbol: ['BTC', 'ETH'] })
+
+  console.log('quotes:' + JSON.stringify(quotes))
 })
 
 test('should get metadata', async () => {
